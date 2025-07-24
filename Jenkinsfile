@@ -21,7 +21,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'huskify-frontend-1', 
+                git branch: 'develop-saurav', 
                     credentialsId: 'github', 
                     url: 'https://github.com/vermaayush680/hackathon-huskify-frontend-1.git'
             }
