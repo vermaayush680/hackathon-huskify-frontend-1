@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: huskify-front-app
+  labels:
+    app: huskify-front-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: huskify-front-app
+  template:
+    metadata:
+      labels:
+        app: huskify-front-app
+    spec:
+      containers:
+      - name: huskify-front-app
+        image: europe-west2-docker.pkg.dev/ltc-reboot25-team-26/huskify/huskify-front-app:BUILD_TAG  # Replace with your actual image
+        ports:
+        - containerPort: 8080  # Update if your app listens on a different port
+        env:
+        - name: VITE_API_BASE_URL
+          value: http://34.123.117.225
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: huskify-front-service
+spec:
+  type: LoadBalancer  # For external access; use ClusterIP if internal only
+  selector:
+    app: huskify-front-app
+  ports:
+  - protocol: TCP
+    port: 81
+    targetPort: 8080
